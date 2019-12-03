@@ -1,0 +1,78 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+string PlayerName;
+int PlayerHealthStat = 20;
+int PlayerAttackStat = rand()%10+1;
+int EnemyHealthStat;
+int EnemyAttackStat;
+
+//Base Class For Enemies Stats
+class Stats
+{
+  public:
+    int EnemyHealthStat;
+    int EnemyAttackStat;
+};
+
+//Enemy Generator Function
+void SpawnEnemy ()
+{
+  //Randomizes Enemy Type
+  int EnemyType;
+  EnemyType = rand()%3+1;
+  
+  //Enemy Classes
+  switch (EnemyType)
+  {
+    case 1:
+    {
+      Stats Goblin;
+      Goblin.EnemyHealthStat = 10;
+      Goblin.EnemyAttackStat = rand()%3+1;
+      cout << " A goblin appears!" << endl;
+    }
+    break;
+    case 2:
+    {
+      Stats Orc;
+      Orc.EnemyHealthStat = 20;
+      Orc.EnemyAttackStat = rand()%5+1;
+      cout << "An orc appears!" << endl;
+    }
+    break;
+    case 3:
+    {
+      Stats Dragon;
+      Dragon.EnemyHealthStat = 30;
+      Dragon.EnemyAttackStat = rand()%10+1;
+      cout << "A dragon appears!" << endl;
+    }
+  }
+}
+
+//Enemy Attack Function
+void EnemyAttack ()
+{
+  PlayerHealthStat = PlayerHealthStat - EnemyAttackStat;
+  cout << "You take " << PlayerHealthStat << " damage!";
+}
+
+//Player Attack Function
+void PlayerAttack ()
+{
+  EnemyHealthStat = EnemyHealthStat - PlayerAttackStat;
+  cout << "The enemy takes " << EnemyHealthStat << " damage!" << endl;
+}
+
+int main() 
+{
+srand(time(0));
+cout << "Welcome to CombatPlusPlus! Please enter your name." << endl;
+cin >> PlayerName;
+cout << "Welcome Sir " << PlayerName << "! Prepare for combat!" << endl;
+SpawnEnemy();
+}
+}
