@@ -49,7 +49,7 @@ void SpawnEnemy ()
     case 1:
     {
       Stats Goblin;
-      Goblin.EnemyHealthStat = 10;
+      Goblin.EnemyHealthStat = 15;
       Goblin.EnemyAttackStat = rand()%3+1;
       cout << "A goblin appears!" << endl;
     }
@@ -73,7 +73,7 @@ void SpawnEnemy ()
   }
 }
 
-//Turn Variable
+//Turn Indicator Variable
 int Turn = 0;
 
 //Menu Selection Variable
@@ -82,9 +82,12 @@ int PlayerSelection;
 int main() 
 {
   srand(time(0));
+  
+  //Creates Player Object
   Stats Player;
   Player.PlayerAttackStat = rand()%10+1;
   Player.PlayerHealthStat = 20;
+  
   cout << "Welcome to CombatPlusPlus! Please enter your name." << endl;
   cin >> Player.PlayerName;
   cout << "Welcome Sir " << Player.PlayerName << "! Prepare for combat!" << endl;
@@ -121,21 +124,22 @@ int main()
     if (Turn == 1)
     {
       cout << "The enemy attacks you!" << endl;
-      //EnemyAttackFunction
+      //EnemyAttackFunction()
+      Turn = 0;
     }
   } while (Player.PlayerHealthStat > 0);
   
   //Lose Condition
-  if (Player.PlayerHealthStat == 0)
+  if (Player.PlayerHealthStat <= 0)
   {
     cout << "You are dead!" << endl;
     return 0;
   }
 
   //Win Condition
-  if (/*EnemyHealthStat*/)
+  //if (EnemyHealthStat <= 0)
   {
-    cout << "You are victorious!" << endl;
-    return 0;
+    //cout << "You are victorious!" << endl;
+    //return 0;
   }
 }
