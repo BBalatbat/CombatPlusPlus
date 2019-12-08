@@ -17,15 +17,22 @@ class Stats
     //Enemy Attack Function
     void EnemyAttack ()
     {
-      PlayerHealthStat = PlayerHealthStat - EnemyAttackStat;
+      int x = PlayerHealthStat;
+      int y = EnemyAttackStat;
+      x = x - y;
       cout << "You take " << PlayerHealthStat << " damage!";
+      PlayerHealthStat = x;
+
     }
 
     //Player Attack Function
     void PlayerAttack ()
     {
-      EnemyHealthStat = EnemyHealthStat - PlayerAttackStat;
+      int y = PlayerAttackStat;
+      int x = EnemyHealthStat;
+      x = x - y;
       cout << "The enemy takes " << EnemyHealthStat << " damage!" << endl;
+      EnemyHealthStat = x;
     }
 
     //Player Heal Function
@@ -36,13 +43,15 @@ class Stats
     }
 };
 
+Stats Enemy;
+
 //Enemy Generator Function
 void SpawnEnemy ()
 {
   //Randomizes Enemy Type
   int EnemyType;
   EnemyType = rand()%3+1;
-  
+
   //Enemy Classes
   switch (EnemyType)
   {
@@ -50,24 +59,27 @@ void SpawnEnemy ()
     {
       Stats Goblin;
       Goblin.EnemyHealthStat = 15;
-      Goblin.EnemyAttackStat = rand()%3+1;
+      Goblin.EnemyAttackStat = 5;
       cout << "A goblin appears!" << endl;
+      Stats Enemy = Goblin;
     }
     break;
     case 2:
     {
       Stats Orc;
-      Orc.EnemyHealthStat = 20;
-      Orc.EnemyAttackStat = rand()%5+1;
+      Orc.EnemyHealthStat = 70;
+      Orc.EnemyAttackStat = 10;
       cout << "An orc appears!" << endl;
+      Stats Enemy = Orc;
     }
     break;
     case 3:
     {
       Stats Dragon;
-      Dragon.EnemyHealthStat = 30;
-      Dragon.EnemyAttackStat = rand()%10+1;
+      Dragon.EnemyHealthStat = 100;
+      Dragon.EnemyAttackStat = 15;
       cout << "A dragon appears!" << endl;
+      Stats Enemy = Dragon;
     }
     break;
   }
@@ -85,32 +97,45 @@ int main()
   
   //Creates Player Object
   Stats Player;
-  Player.PlayerAttackStat = rand()%10+1;
-  Player.PlayerHealthStat = 20;
+  Player.PlayerAttackStat = 10;
+  Player.PlayerHealthStat = 50;
   
   cout << "Welcome to CombatPlusPlus! Please enter your name." << endl;
   cin >> Player.PlayerName;
   cout << "Welcome Sir " << Player.PlayerName << "! Prepare for combat!" << endl;
   SpawnEnemy();
-  do
-  {
+  Stats Enemy;
+  
     //Player's Turn
-    if (Turn == 0)
+    while (Turn == 0)
+    {
     {
       cout << "It's your turn! What will you do?" << endl;
       cout << "1. Attack" << endl;
       cout << "2. Heal" << endl;
       cin >> PlayerSelection;
+      cout << Player.PlayerAttackStat << endl; 
+      cout << Player.PlayerHealthStat << endl;
+      cout << Enemy.EnemyHealthStat << endl;
+      cout << Enemy.EnemyAttackStat << endl;
       switch (PlayerSelection)
       {
         case 1:
         {
           Player.PlayerAttack();
-        }
-        break;
+          //Win Condition
+          if (Enemy.EnemyHealthStat <= 0)
+            {
+              cout << "You are victorious!" << endl;
+              return 0;
+            }
+          Turn = 1;
+          }
+          break;
         case 2:
         {
           Player.PlayerHeal();
+          Turn = 1;
         }
         break;
         default:
@@ -124,22 +149,14 @@ int main()
     if (Turn == 1)
     {
       cout << "The enemy attacks you!" << endl;
-      //EnemyAttackFunction()
+      Enemy.EnemyAttack();
+   //Lose Condition
+      if (Player.PlayerHealthStat <= 0)
+      {
+        cout << "You are dead!" << endl;
+        return 0;
+      }
       Turn = 0;
     }
-  } while (Player.PlayerHealthStat > 0);
-  
-  //Lose Condition
-  if (Player.PlayerHealthStat <= 0)
-  {
-    cout << "You are dead!" << endl;
-    return 0;
-  }
-
-  //Win Condition
-  //if (EnemyHealthStat <= 0)
-  {
-    //cout << "You are victorious!" << endl;
-    //return 0;
-  }
+    }
 }
