@@ -1,0 +1,169 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+
+//Base Class For Stats
+class Stats
+{
+  public:
+    string PlayerName;
+    string EnemyName;
+    int PlayerHealthStat;
+    int PlayerAttackStat;
+    int EnemyHealthStat;
+    int EnemyAttackStat;
+    
+    
+    //Player Heal Function
+    void PlayerHeal ()
+    {
+      PlayerHealthStat = PlayerHealthStat + rand()%10+1;
+      cout << "You heal yourself to " << PlayerHealthStat << " points!" << endl;
+    }
+    //Enemy Randomizer
+    void SpawnEnemy ()
+    {
+      int EnemyType;
+      switch (EnemyType = rand()%3+1)
+      {
+        case 1:
+        {
+          cout << " " << endl;
+          cout << "A goblin appears!" << endl;
+          EnemyHealthStat = 20;
+          EnemyAttackStat = rand()%5+10;
+          EnemyName = "Goblin";
+        }
+        break;
+        case 2:
+        {
+          cout << "An orc appears!" << endl;
+          EnemyHealthStat = 50;
+          EnemyAttackStat = rand()%10+15;
+          EnemyName = "Orc";  
+        }
+        break;
+        case 3:
+        {
+          cout << "A dragon appears!" << endl;
+          EnemyHealthStat = 80;
+          EnemyAttackStat = rand()%15+20;
+          EnemyName = "Dragon";
+        } 
+        break;
+    }
+  }
+};
+
+//Turn Indicator Variable
+int Turn;
+
+//Menu Selection Variable
+int PlayerSelection;
+
+int main() 
+{
+  srand(time(0));
+  Turn = 0;
+  
+  //Creates Player Object
+  Stats Player;
+  Player.PlayerAttackStat = 0;
+  Player.PlayerHealthStat = 50;
+
+  cout << "Welcome to CombatPlusPlus! Please enter your name." << endl;
+  cin >> Player.PlayerName;
+  cout << "Welcome Sir " << Player.PlayerName << "! Prepare for combat!" << endl;
+ 
+ //Creates Enemy Object
+  Stats Enemy;
+  Enemy.SpawnEnemy();
+  
+  cout << "Current HP: " << Player.PlayerHealthStat << endl;
+  cout << Enemy.EnemyName << "'s HP: " << Enemy.EnemyHealthStat << endl;
+  
+    //Player's Turn
+    while (Turn == 0)
+    {
+    {
+      cout << " " << endl;
+      cout << "It's your turn! What will you do?" << endl;
+      cout << "1. Attack" << endl;
+      cout << "2. Heal" << endl;
+      cin >> PlayerSelection;
+
+      //Selection Menu
+      switch (PlayerSelection)
+      {
+        //Player Attack
+        case 1:
+        {
+          cout << " " << endl;
+          cout << "You attack the monster!" << endl;
+          int y = Player.PlayerAttackStat;
+          int x = Enemy.EnemyHealthStat;
+          y = rand()%10+1;
+          x = x - y;
+          cout << " " << endl;
+          cout << "The enemy takes " << y << " damage!" << endl;
+          Enemy.EnemyHealthStat = x;
+          cout << " " << endl;
+          cout << "Current HP: " << Player.PlayerHealthStat << endl;
+          cout << Enemy.EnemyName << "'s HP: " << Enemy.EnemyHealthStat << endl;
+          
+          //Win Condition
+          if (Enemy.EnemyHealthStat <= 0)
+            {
+              cout << endl;
+              cout << "The " << Enemy.EnemyName << " is dead!" << endl;
+              cout << "You are victorious!" << endl;
+              return 0;
+            }
+          Turn = 1;
+          }
+          break;
+        //Player Heal
+        case 2:
+        {
+          Player.PlayerHeal();
+          Turn = 1;
+        }
+        break;
+        default:
+        {
+          cout << " " << endl;
+          cout << "You skip your turn!" << endl;
+          Turn = 1;
+        }
+      }
+    }
+    //Enemy's Turn
+    if (Turn == 1)
+    {
+      //Enemy Attack
+      cout << " " << endl;
+      cout << "The enemy attacks you!" << endl;
+      int x = Player.PlayerHealthStat;
+      int y = Enemy.EnemyAttackStat;
+      x = x - y;
+      cout << " " << endl;
+      cout << "You take " << y << " damage!" <<endl;
+      Player.PlayerHealthStat = x;
+      cout << " " << endl;
+      cout << "Current HP: " << Player.PlayerHealthStat << endl;
+      cout << "Enemy HP: " << Enemy.EnemyHealthStat << endl;
+
+      //Lose Condition
+      if (Player.PlayerHealthStat <= 0)
+      {
+        cout << " " << endl;
+        cout << "You are dead!" << endl;
+        cout << "Game Over!" << endl;
+        return 0;
+      }
+      Turn = 0;
+    }
+  }
+}
