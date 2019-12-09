@@ -32,24 +32,24 @@ class Stats
         {
           cout << " " << endl;
           cout << "A goblin appears!" << endl;
-          EnemyHealthStat = 20;
-          EnemyAttackStat = rand()%5+10;
+          EnemyHealthStat = 10;
+          EnemyAttackStat = rand()%10+1;
           EnemyName = "Goblin";
         }
         break;
         case 2:
         {
           cout << "An orc appears!" << endl;
-          EnemyHealthStat = 50;
-          EnemyAttackStat = rand()%10+15;
+          EnemyHealthStat = 20;
+          EnemyAttackStat = rand()%15+5;
           EnemyName = "Orc";  
         }
         break;
         case 3:
         {
           cout << "A dragon appears!" << endl;
-          EnemyHealthStat = 80;
-          EnemyAttackStat = rand()%15+20;
+          EnemyHealthStat = 50;
+          EnemyAttackStat = rand()%20+5;
           EnemyName = "Dragon";
         } 
         break;
@@ -101,13 +101,13 @@ int main()
         case 1:
         {
           cout << " " << endl;
-          cout << "You attack the monster!" << endl;
+          cout << "You attack the " << Enemy.EnemyName << "!" << endl;
           int y = Player.PlayerAttackStat;
           int x = Enemy.EnemyHealthStat;
           y = rand()%10+1;
           x = x - y;
           cout << " " << endl;
-          cout << "The enemy takes " << y << " damage!" << endl;
+          cout << "The " << Enemy.EnemyName << " takes " << y << " damage!" << endl;
           Enemy.EnemyHealthStat = x;
           cout << " " << endl;
           cout << "Current HP: " << Player.PlayerHealthStat << endl;
@@ -144,7 +144,7 @@ int main()
     {
       //Enemy Attack
       cout << " " << endl;
-      cout << "The enemy attacks you!" << endl;
+      cout << "The " << Enemy.EnemyName << " attacks you!" << endl;
       int x = Player.PlayerHealthStat;
       int y = Enemy.EnemyAttackStat;
       x = x - y;
