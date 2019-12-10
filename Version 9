@@ -1,4 +1,5 @@
 #include <iostream>
+#include <istream>
 #include <ctime>
 #include <cstdlib>
 using namespace std;
@@ -60,15 +61,14 @@ class Stats
   };
 
 //Turn Indicator Variable
-int Turn;
+int Turn = 0;
 
 //Menu Selection Variable
-int PlayerSelection;
+int PlayerSelection = 0;
 
 int main() 
 {
   srand(time(0));
-  Turn = 0;
   
   //Creates Player Object
   Stats Player;
@@ -136,8 +136,13 @@ int main()
             default:
             {
               cout << " " << endl;
-              cout << "You skip your turn!" << endl;
-              Turn = 1;
+              cout << "Invalid Input" << endl;
+              cout << "Please only input selections from the menu." << endl;
+              cout << "Enter 1 to continue" << endl;
+              cin.clear();
+              cin.ignore(2000,'\n');
+              Turn = 0;
+              cin >> PlayerSelection;
             }
         }
       }
