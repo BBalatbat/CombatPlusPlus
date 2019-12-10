@@ -18,7 +18,7 @@ class Stats
     //Player Heal Function
     void PlayerHeal ()
     {
-      PlayerHealthStat = PlayerHealthStat + rand()%15+1;
+      PlayerHealthStat = PlayerHealthStat + rand()%20+1;
       cout << "You heal yourself to " << PlayerHealthStat << " points!" << endl;
     }
     
@@ -106,7 +106,7 @@ int main()
               cout << "You attack the " << Enemy.EnemyName << "!" << endl;
               int y = Player.PlayerAttackStat;
               int x = Enemy.EnemyHealthStat;
-              y = rand()%15+1;
+              y = rand()%20+1;
               x = x - y;
               Enemy.EnemyHealthStat = x;
               cout << " " << endl;
